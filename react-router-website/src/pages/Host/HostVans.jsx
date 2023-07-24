@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import { getHostVans } from '../../apis';
+
+export function loader() {
+    return getHostVans();
+}
 
 function HostVans() {
-  const [hostVans, setHostVans]  = useState([]);
-  useEffect( () => {
-    fetch('/api/host/vans')
-    .then( res => res.json())
-    .then(data => setHostVans(data.vans))
-  }, [])
+//   const [hostVans, setHostVans]  = useState([]);
+//   useEffect( () => {
+//     fetch('/api/host/vans')
+//     .then( res => res.json())
+//     .then(data => setHostVans(data.vans))
+//   }, [])
+const hostVans = useLoaderData();
   const hostVansEls = hostVans.map(van => (
     <Link
-        to={`/host/vans/${van.id}`}
+        to={van.id}
         key={van.id}
         className="host-van-link-wrapper"
     >
@@ -29,7 +35,7 @@ return (
     <section>
         <h1 className="host-vans-title">Your listed vans</h1>
         <div className="host-vans-list">
-            {
+            {/* {
                 hostVans.length > 0 ? (
                     <section>
                         {hostVansEls}
@@ -38,7 +44,8 @@ return (
                 ) : (
                         <h2>Loading...</h2>
                     )
-            }
+            } */}
+            {hostVansEls}
         </div>
     </section>
 )
