@@ -508,6 +508,9 @@ i[class*="van-type-"] {
   align-items: center;
   padding-inline: 27px;
 }
+h3.red {
+  color: red;
+}
 
 .login-form {
   display: flex;
