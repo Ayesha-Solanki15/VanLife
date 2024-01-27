@@ -19,12 +19,13 @@ export async function action({ request }) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const pathname = new URL(request.url).searchParams.get("redirectTo") || "/host"
   // console.log(email, password)
   try {
     const data = await loginUser({ email, password });
     // console.log(data)
     localStorage.setItem("loggedIn", "true");
-    return redirect("/host");
+    return redirect(pathname);
   } catch (err) {
     return err.message
   }

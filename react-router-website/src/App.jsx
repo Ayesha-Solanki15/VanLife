@@ -48,7 +48,7 @@ const router = createBrowserRouter(
       {/* <Route path="vans" loader={vansLoader} element={<Vans />} /> */}
       {/* for data layer api , errorElement will run if there's an error either inside the loader function or inside the element prop's component.*/}
       {/* ***IMP: instead of adding errorElement prop to the specific route, we can add the prop to the parent route so if any of the child/deeply nested child route throws an error it will be bubble-up to the route handling the error and will be handled by the component rendered via errorElement prop. *** */}
-      <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} />
+      <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} errorElement={<Error />} />
       <Route path="host" element={<HostLayout />}>
         {/* <Route index element={<Dashboard />} />
         <Route path="reviews" element={<Reviews />} />
@@ -62,38 +62,39 @@ const router = createBrowserRouter(
         <Route
           index
           element={<Dashboard />}
-          loader={async () => await requireAuth()}
+          loader={async ({request}) => await requireAuth(request)}
         />
         <Route
           path="reviews"
           element={<Reviews />}
-          loader={async () => await requireAuth()}
+          loader={async ({request}) => await requireAuth(request)}
         />
         <Route
           path="income"
           element={<Income />}
-          loader={async () => await requireAuth()}
+          loader={async ({request}) => await requireAuth(request)}
         />
-        <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
+        <Route path="vans" element={<HostVans />} loader={hostVansLoader} errorElement={<Error />}/>
         <Route
           path="vans/:id"
           element={<HostVanDetail />}
           loader={hostVanDetailLoader}
+          errorElement={<Error />}
         >
           <Route
             index
             element={<HostVanInfo />}
-            loader={async () => await requireAuth()}
+            loader={async ({request}) => await requireAuth(request)}
           />
           <Route
             path="photo"
             element={<HostVanPhoto />}
-            loader={async () => await requireAuth()}
+            loader={async ({request}) => await requireAuth(request)}
           />
           <Route
             path="pricing"
             element={<HostVanPricing />}
-            loader={async () => await requireAuth()}
+            loader={async ({request}) => await requireAuth(request)}
           />
         </Route>
       </Route>
